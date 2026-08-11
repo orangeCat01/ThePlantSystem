@@ -13,11 +13,14 @@ export class SceneManager {
   private currentScene: RenderableScene | null = null;
   private initialized = false;
   private destroyed = false;
+  /** 初始场景名（Phase 2.16 reload 回退目标）。 */
+  private initialScene: SceneName = 'solar';
 
   async initialize(container: HTMLElement, initialScene: SceneName): Promise<void> {
     if (this.initialized) {
       return;
     }
+    this.initialScene = initialScene;
 
     const renderer = this.rendererManager.initialize(container);
     this.animationManager.addUpdateCallback('scene-manager', (deltaTime, elapsedTime) => {
@@ -55,6 +58,28 @@ export class SceneManager {
     );
     nextScene.start();
     this.currentScene = nextScene;
+  }
+
+  getCurrentScene(): RenderableScene | null {
+    return this.currentScene;
+  }
+
+  /**
+   * 重新加载当前场景（Phase 2.16 FR-003 重新加载入口）：
+   * 销毁当前场景（幂等）后按同一场景名重建（跳过同名短路检查）。
+   * 调用方负责先清模型缓存（如 modelLoader.clearCache()）以获得全新资源。
+   */
+  async reloadCurrentScene(): Promise<void> {
+    if (!this.initialized) {
+      throw new Error('SceneManager must be initialized before reloading scenes.');
+    }
+
+    const sceneName = this.currentScene?.sceneName ?? this.initialScene;
+    this.currentScene?.pause();
+    this.currentScene?.destroy();
+    this.currentScene = null;
+
+    await this.switchScene(sceneName);
   }
 
   resize(width: number, height: number): void {

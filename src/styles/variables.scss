@@ -1,13 +1,17 @@
-﻿$color-void: #050508;
-$color-panel: rgba(16, 19, 28, 0.72);
+﻿// Phase 2.21/2.22 视觉统一语义（减少颜色数量）：
+// 金色 = 科学重点（#f4c95d：标题强调 / 数据高亮）；
+// 青色 = 当前交互（#42d9ff：hover / 选中 / 链接）；
+// 灰蓝 = 背景与边框 / 普通文本（#9ba8c7）。
+// 禁止混用绿色 / 紫色 / 红色（错误提示除外）。
+$color-void: #050508;
+$color-panel: rgba(8, 15, 35, 0.75);
 $color-panel-strong: rgba(22, 27, 39, 0.9);
-$color-line: rgba(158, 176, 204, 0.22);
+$color-line: rgba(80, 120, 180, 0.25);
 $color-text: #edf4ff;
-$color-muted: #a7b3c7;
-$color-cyan: #5ee7df;
-$color-amber: #ffce73;
-$color-magenta: #d88cff;
+$color-muted: #9ba8c7;
+$color-cyan: #42d9ff;
+$color-amber: #f4c95d;
 $shadow-panel: 0 22px 70px rgba(0, 0, 0, 0.42);
-$radius-panel: 8px;
+$radius-panel: 12px;
 $font-body: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
 $font-display: "STZhongsong", "Microsoft YaHei", "PingFang SC", serif;

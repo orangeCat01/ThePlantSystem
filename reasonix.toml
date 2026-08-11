@@ -1,0 +1,2 @@
+[permissions]
+allow = ["Bash=cd /d/Study/ProjectForStudy/studyThree/NiceDemos/ThePlantSystem && cat tsconfig.json tsconfig.node.json index.html .env.example && echo \"---EMPTY DIRS---\" && for d in src/three/controllers src/three/effects src/three/loaders src/three/solar src/three/galaxy src/three/utils src/data src/repositories src/utils; do if [ -z \"$(ls -A $d 2>/dev/null)\" ]; then echo \"EMPTY: $d\"; fi; done"]

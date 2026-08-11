@@ -19,12 +19,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"Earth",
-			"translation":[
-				0,
-				1.0923148393630981,
-				3
-			]
+			"name":"Earth"
 		}
 	],
 	"materials":[
@@ -40,7 +35,7 @@
 					"ior":1.4500000476837158
 				}
 			},
-			"name":"Earth",
+			"name":"Earth.001",
 			"normalTexture":{
 				"index":1,
 				"scale":10
@@ -56,7 +51,7 @@
 	],
 	"meshes":[
 		{
-			"name":"Sphere.002",
+			"name":"Sphere.001",
 			"primitives":[
 				{
 					"attributes":{
@@ -105,29 +100,29 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":10482,
+			"count":10490,
 			"max":[
-				0.9967162609100342,
-				0.9998325705528259,
-				0.9967181086540222
+				1.002883791923523,
+				0.9989817142486572,
+				0.9964536428451538
 			],
 			"min":[
-				-0.9967167973518372,
-				-0.9998325705528259,
-				-0.9967158436775208
+				-0.9905492067337036,
+				-1.0006834268569946,
+				-0.9969803094863892
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":10482,
+			"count":10490,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":10482,
+			"count":10490,
 			"type":"VEC2"
 		},
 		{
@@ -140,26 +135,26 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":125784,
+			"byteLength":125880,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":125784,
-			"byteOffset":125784,
+			"byteLength":125880,
+			"byteOffset":125880,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":83856,
-			"byteOffset":251568,
+			"byteLength":83920,
+			"byteOffset":251760,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":118800,
-			"byteOffset":335424,
+			"byteOffset":335680,
 			"target":34963
 		}
 	],
@@ -171,7 +166,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":454224,
+			"byteLength":454480,
 			"uri":"Earth.bin"
 		}
 	]

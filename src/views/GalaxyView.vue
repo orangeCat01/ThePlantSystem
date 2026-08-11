@@ -2,6 +2,8 @@
 import { onMounted } from 'vue';
 import { useUniverseStore } from '@/stores/universe.store';
 
+// 银河系路由页（Phase 2.20.1：不再渲染标题卡，仅负责场景状态同步；
+// 全局标题统一由 AppHeader 提供）。
 const store = useUniverseStore();
 
 onMounted(() => {
@@ -10,9 +12,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="scene-caption scene-caption--galaxy" aria-label="银河系页面状态">
-    <span>Galaxy Skeleton</span>
-    <h2>银河系探索入口</h2>
-    <p>当前仅显示少量静态测试点，用于验证场景切换流程，不包含银河旋臂算法。</p>
-  </section>
+  <!-- 银河系场景挂载点（无内容；Canvas 由 SceneViewport 全屏渲染） -->
 </template>

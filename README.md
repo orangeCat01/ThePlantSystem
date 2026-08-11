@@ -1,12 +1,15 @@
 ﻿# 银河系科普探索站
 
-银河系科普探索站是一个基于 Vue 3、TypeScript、Pinia、Vue Router、Vite 和 Three.js 的交互式三维天文科普网站。当前以太阳系 MVP 为第一优先级，后续再扩展银河系探索场景。
+银河系科普探索站是一个基于 Vue 3、TypeScript、Vite、Pinia、Vue Router 和 Three.js 的交互式三维天文科普网站。项目当前以太阳系探索为核心，提供三维行星场景、天体信息面板、观测辅助、任务与深空对象等科普交互能力，并保留后续银河系场景扩展空间。
 
-## 当前开发阶段
+## 功能亮点
 
-Phase 1：工程初始化与基础骨架搭建。
-
-本阶段已经建立可启动、可构建的前端工程骨架，包括应用入口、路由、Pinia 状态、Three.js Canvas 宿主、基础生命周期管理和太阳系/银河系占位场景。
+- 太阳系三维探索场景：基于 Three.js 管理行星、轨道、卫星、彗星、小行星带和背景星空。
+- 类型化天文数据：行星、恒星、深空对象、任务、望远镜配置等数据集中管理。
+- Vue 与 Three.js 分层：UI 状态通过 Pinia、ApplicationCoordinator 和场景模块通信，避免组件直接持有 Three.js 运行时对象。
+- 模型加载与降级：统一 ModelLoader 加载 public/models 下的 glTF 资源，加载失败时提供占位模型并上报错误。
+- 子路径静态部署：Vite `base` 配置为 `/plant/`，模型资源与 Vue Router history 均适配服务器子目录部署。
+- 可验证脚本：仓库包含若干 `scripts/verify-*` 脚本，用于检查场景、资源、UI 与架构边界。
 
 ## 技术栈
 
@@ -20,67 +23,137 @@ Phase 1：工程初始化与基础骨架搭建。
 
 ## 环境要求
 
-建议使用 Node.js 22 或兼容当前 Vite 版本的 Node.js 环境。包管理器使用 npm，因为仓库已有 `package-lock.json`。
+建议使用 Node.js 22 或兼容当前 Vite 版本的 Node.js 环境。包管理器使用 npm，仓库已包含 `package-lock.json`。
 
-## 安装命令
+## 快速开始
+
+安装依赖：
 
 ```bash
 npm install
 ```
 
-## 启动命令
+启动开发服务器：
 
 ```bash
 npm run dev
 ```
 
-## 类型检查命令
+类型检查：
 
 ```bash
 npm run type-check
 ```
 
-## 构建命令
+生产构建：
 
 ```bash
 npm run build
 ```
 
-## 项目目录概览
+本地预览构建产物：
+
+```bash
+npm run preview
+```
+
+## 静态部署
+
+当前项目按 `/plant/` 子路径部署配置。构建后将 `dist/` 目录内的所有文件上传到服务器站点目录下的 `plant` 子目录，例如：
+
+```text
+/www/wwwroot/your-domain/plant/
+```
+
+访问地址示例：
+
+```text
+https://your-domain.com/plant/
+```
+
+如果使用宝塔面板 + Nginx，并启用了 Vue Router history 模式，需要为 `/plant/` 配置回退规则：
+
+```nginx
+location /plant/ {
+  try_files $uri $uri/ /plant/index.html;
+}
+```
+
+如果部署到其他子路径，请同步修改 `vite.config.ts` 中的 `base` 配置，并重新执行 `npm run build`。
+
+## 项目结构
 
 ```text
 src/
-├── app/                 # ApplicationCoordinator 与应用生命周期
-├── views/               # 路由页面
-├── components/          # UI 展示组件
-├── stores/              # Pinia 可序列化状态
-├── three/               # Three.js 核心层与场景骨架
+├── app/                 # ApplicationCoordinator、OverlayManager 与应用生命周期
+├── astronomy/           # 天文计算、观测、坐标和事件逻辑
+├── components/          # Vue UI 组件
+├── data/                # 行星、恒星、任务、深空对象等静态配置
+├── mission/             # 任务时间与任务相关业务逻辑
+├── repositories/        # 科普数据访问入口
 ├── router/              # Vue Router 配置
-├── styles/              # SCSS 变量、重置和全局样式
+├── stores/              # Pinia 可序列化状态
+├── styles/              # 全局样式与变量
+├── three/               # Three.js 场景、控制器、效果、加载器和资源管理
 ├── types/               # 公共 TypeScript 类型
-├── data/                # 后续静态数据入口
-├── repositories/        # 后续数据访问入口
-└── utils/               # 后续通用工具入口
+└── views/               # 页面级视图
 ```
 
-## 架构文档入口
+## 架构原则
+
+项目遵守单向依赖边界：
+
+```text
+Vue Components
+-> Pinia Store
+-> ApplicationCoordinator
+-> SceneManager
+-> Three.js Scene Modules
+-> Resource and Data Layer
+```
+
+核心约束：
+
+- Vue 组件只负责 UI、输入入口和业务信息展示。
+- Pinia 只保存可序列化业务状态，不保存 `THREE.Scene`、`THREE.Mesh`、`OrbitControls` 等运行时对象。
+- Three.js 模块只负责场景、相机、渲染器、对象、动画和三维交互。
+- 场景模块和长期运行的管理器需要提供清晰生命周期，并支持可重复调用的 `destroy`。
+- 模型和纹理等资源由统一加载器与资源管理模块负责加载和释放。
+
+更多协作与架构规则见：
 
 - `AGENTS.md`
 - `docs/architecture/AI_COLLABORATION_ARCHITECTURE_V1.md`
 - `docs/architecture/ADR-001-VUE_THREE_BOUNDARY.md`
 - `docs/architecture/ADR-002-THREE_LIFECYCLE_AND_RESOURCES.md`
 
-## 当前未实现功能
+## 模型资源说明
 
-- 真实太阳系天体。
-- GLB 模型加载。
-- 行星公转和自转。
-- Raycaster 天体点击。
-- 相机聚焦、跟随和复位。
-- 真实银河粒子系统。
-- Bloom 和 Shader 特效。
-- 科普业务数据和完整信息面板。
+模型资源位于 `public/models/`。部分资源沿用了原始文件名，例如：
 
-## 下一阶段说明
+- `public/models/venus/vueus.gltf`
+- `public/models/mercury/merculy.gltf`
+- `public/models/neptun/neptun.gltf`
+- `public/models/Earth/Earth.gltf`
 
-Phase 2 建议在当前骨架上补充太阳系 MVP 的类型化数据配置、基础天体管理器和最小可验证的行星对象，但仍应遵守 Vue 与 Three.js 的职责边界。
+这些命名在 `src/data/models/planet-models.ts` 中显式配置，避免按天体 ID 自动拼接路径导致 404。
+
+## 常用验证
+
+完整构建验证：
+
+```bash
+npm run build
+```
+
+模型与子路径部署验证：
+
+```bash
+node scripts/run-vite-verify.mjs /scripts/verify-model-base-path.ts
+```
+
+Git 空白检查：
+
+```bash
+git diff --check
+```
