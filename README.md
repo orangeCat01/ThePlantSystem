@@ -10,6 +10,8 @@
 - 模型加载与降级：统一 ModelLoader 加载 public/models 下的 glTF 资源，加载失败时提供占位模型并上报错误。
 - 子路径静态部署：Vite `base` 配置为 `/plant/`，模型资源与 Vue Router history 均适配服务器子目录部署。
 - 可验证脚本：仓库包含若干 `scripts/verify-*` 脚本，用于检查场景、资源、UI 与架构边界。
+##体验地址
+http://47.109.207.74:3001/plant/universe/galaxy
 
 ## 技术栈
 
@@ -38,48 +40,6 @@ npm install
 ```bash
 npm run dev
 ```
-
-类型检查：
-
-```bash
-npm run type-check
-```
-
-生产构建：
-
-```bash
-npm run build
-```
-
-本地预览构建产物：
-
-```bash
-npm run preview
-```
-
-## 静态部署
-
-当前项目按 `/plant/` 子路径部署配置。构建后将 `dist/` 目录内的所有文件上传到服务器站点目录下的 `plant` 子目录，例如：
-
-```text
-/www/wwwroot/your-domain/plant/
-```
-
-访问地址示例：
-
-```text
-https://your-domain.com/plant/
-```
-
-如果使用宝塔面板 + Nginx，并启用了 Vue Router history 模式，需要为 `/plant/` 配置回退规则：
-
-```nginx
-location /plant/ {
-  try_files $uri $uri/ /plant/index.html;
-}
-```
-
-如果部署到其他子路径，请同步修改 `vite.config.ts` 中的 `base` 配置，并重新执行 `npm run build`。
 
 ## 项目结构
 
