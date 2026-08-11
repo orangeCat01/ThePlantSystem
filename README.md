@@ -157,3 +157,9 @@ Git 空白检查：
 ```bash
 git diff --check
 ```
+
+##展示
+<img width="1915" height="924" alt="image" src="https://github.com/user-attachments/assets/32a1ae1b-8923-4418-851f-fff8c4086aa5" />
+<img width="1906" height="928" alt="image" src="https://github.com/user-attachments/assets/f0b59172-983b-405e-bd37-82a810e113a4" />
+
+
